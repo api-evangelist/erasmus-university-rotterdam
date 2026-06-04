@@ -1,0 +1,91 @@
+---
+aid: erasmus-university-rotterdam
+name: Erasmus University Rotterdam
+description: >-
+  Erasmus University Rotterdam (EUR) is a public research university in Rotterdam,
+  the Netherlands, ranked #158 in the QS World University Rankings 2025. EUR does
+  not operate a single consolidated public developer portal; its discoverable,
+  programmatic surface is concentrated in scholarly and research-data
+  infrastructure. RePub, the institutional repository, exposes a confirmed live
+  OAI-PMH metadata feed, the EUR research data repository is hosted on Figshare
+  (reachable via the Figshare public REST API), and the EUR & Erasmus MC research
+  information portal runs on Pure (CRIS) with an OAI-PMH service path. Most
+  course, timetable, identity, and administrative interfaces are gated behind
+  institutional affiliation rather than openly documented.
+type: Index
+position: Consumer
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/erasmus-university-rotterdam/refs/heads/main/apis.yml
+tags:
+  - Education
+  - Higher Education
+  - University
+  - Research Data
+  - Open Access
+  - Repository
+  - OAI-PMH
+  - Netherlands
+created: '2026-06-03'
+modified: '2026-06-03'
+specificationVersion: '0.19'
+apis:
+  - aid: erasmus-university-rotterdam:repub-oai
+    name: RePub OAI-PMH Metadata Feed
+    description: >-
+      OAI-PMH 2.0 metadata harvesting interface for RePub, the Erasmus University
+      institutional repository. Verified live; the Identify response self-reports
+      as "Erasmus University OAIPMH Feed" and supports standard OAI-PMH verbs
+      (Identify, ListRecords, GetRecord, ListMetadataFormats) for harvesting
+      publication metadata.
+    humanURL: https://repub.eur.nl/
+    baseURL: https://repub.eur.nl/oai
+    tags: [ Repository, OAI-PMH, Open Access, Metadata, Research ]
+    properties:
+      - type: Documentation
+        url: https://repub.eur.nl/
+  - aid: erasmus-university-rotterdam:pure-oai
+    name: Pure Research Portal OAI-PMH
+    description: >-
+      OAI-PMH metadata service for the EUR & Erasmus MC Research Information
+      Portal, which runs on Elsevier Pure (CRIS). The web portal resolves (HTTP
+      200) and the documented OAI service path is reachable; at the time of
+      review the Identify verb returned an HTTP 500, so harvesting behavior should
+      be re-verified before use.
+    humanURL: https://pure.eur.nl/
+    baseURL: https://pure.eur.nl/ws/oai
+    tags: [ Repository, OAI-PMH, CRIS, Pure, Research ]
+    properties:
+      - type: Documentation
+        url: https://www.eur.nl/en/library/research-support/eur-erasmus-mc-research-information-portal-and-pure-repository
+  - aid: erasmus-university-rotterdam:figshare-data
+    name: EUR Research Data Repository (Figshare API)
+    description: >-
+      The Erasmus University Rotterdam research data repository is hosted on the
+      Figshare platform (datarepository.eur.nl). Datasets and their metadata are
+      accessible programmatically through the public Figshare v2 REST API, which
+      supports listing and retrieving articles, collections, and project records.
+    humanURL: https://datarepository.eur.nl/
+    baseURL: https://api.figshare.com/v2
+    tags: [ Research Data, Repository, Figshare, Open Data, REST ]
+    properties:
+      - type: Documentation
+        url: https://docs.figshare.com/
+common:
+  - type: Website
+    url: https://www.eur.nl/en
+  - type: GitHub
+    url: https://github.com/eur-nl
+  - type: LinkedIn
+    url: https://www.linkedin.com/school/erasmus-university-rotterdam/
+  - type: Plans
+    url: plans/erasmus-university-rotterdam-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/erasmus-university-rotterdam-rate-limits.yml
+  - type: FinOps
+    url: finops/erasmus-university-rotterdam-finops.yml
+  - type: Review
+    url: review.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

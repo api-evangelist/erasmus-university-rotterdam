@@ -1,0 +1,48 @@
+---
+name: Erasmus University Rotterdam
+description: Erasmus University Rotterdam public developer/API footprint review for APIs.json cataloging.
+url: https://raw.githubusercontent.com/api-evangelist/erasmus-university-rotterdam/refs/heads/main/review.yml
+created: '2026-06-03'
+modified: '2026-06-03'
+reviews:
+  - date: '2026-06-03'
+    rating: 2
+    summary: >-
+      Erasmus University Rotterdam has no consolidated public developer portal. Its
+      programmatic surface is research/scholarly infrastructure. The RePub OAI-PMH
+      feed was verified live, returning valid OAI-PMH 2.0 XML self-identifying as
+      "Erasmus University OAIPMH Feed". The Pure research portal resolves but its
+      OAI service path returned HTTP 500 on the Identify verb, so it is listed but
+      flagged for re-verification. The EUR research data repository is hosted on
+      Figshare and accessible via the public Figshare v2 REST API. The official
+      eur-nl GitHub org exists (18 repos). No course/timetable/SIS, identity, or
+      mobile-backend APIs were found publicly documented. No endpoints were
+      fabricated; only confirmed URLs are listed.
+    endpoints:
+      - url: https://repub.eur.nl/oai?verb=Identify
+        status: 200
+        note: Live OAI-PMH 2.0 feed; repositoryName "Erasmus University OAIPMH Feed".
+      - url: https://pure.eur.nl/
+        status: 200
+        note: Pure (CRIS) research portal web front end resolves.
+      - url: https://pure.eur.nl/ws/oai?verb=Identify
+        status: 500
+        note: OAI service path resolves but Identify verb returned 500; re-verify before harvesting.
+      - url: https://datarepository.eur.nl/
+        status: 0
+        note: Figshare-hosted data repository; custom domain did not resolve from probe host.
+      - url: https://api.figshare.com/v2/articles
+        status: 200
+        note: Public Figshare v2 REST API used to access the EUR data repository.
+      - url: https://docs.figshare.com/
+        status: 200
+        note: Figshare API documentation.
+      - url: https://github.com/eur-nl
+        status: 200
+        note: Official Erasmus University Rotterdam GitHub org (18 repositories).
+      - url: https://www.eur.nl/en
+        status: 200
+        note: Official university website.
+      - url: https://repub.eur.nl/
+        status: 200
+        note: RePub institutional repository web front end.

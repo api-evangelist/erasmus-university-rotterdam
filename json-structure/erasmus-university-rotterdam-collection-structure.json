@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/erasmus-university-rotterdam/main/json-structure/erasmus-university-rotterdam-collection-structure.json",
+  "name": "Collection",
+  "type": "object",
+  "description": "Figshare collection object.",
+  "required": [
+    "doi",
+    "handle",
+    "id",
+    "timeline",
+    "title",
+    "url"
+  ],
+  "properties": {
+    "id": {
+      "type": "int64",
+      "description": "Collection id"
+    },
+    "title": {
+      "type": "string",
+      "description": "Collection title"
+    },
+    "doi": {
+      "type": "string",
+      "description": "Collection DOI"
+    },
+    "handle": {
+      "type": "string",
+      "description": "Collection Handle"
+    },
+    "url": {
+      "type": "string",
+      "description": "Api endpoint"
+    },
+    "timeline": {
+      "type": "object",
+      "description": "Nested object reference: Timeline"
+    }
+  }
+}

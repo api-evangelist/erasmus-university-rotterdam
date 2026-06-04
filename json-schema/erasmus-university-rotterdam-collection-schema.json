@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/erasmus-university-rotterdam/main/json-schema/erasmus-university-rotterdam-collection-schema.json",
+  "title": "Figshare Collection",
+  "description": "A curated collection of Figshare articles.",
+  "type": "object",
+  "required": [
+    "doi",
+    "handle",
+    "id",
+    "timeline",
+    "title",
+    "url"
+  ],
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Collection id",
+      "examples": [
+        123
+      ]
+    },
+    "title": {
+      "type": "string",
+      "description": "Collection title",
+      "examples": [
+        "Sample collection"
+      ]
+    },
+    "doi": {
+      "type": "string",
+      "description": "Collection DOI",
+      "examples": [
+        "10.6084/m9.figshare.123"
+      ]
+    },
+    "handle": {
+      "type": "string",
+      "description": "Collection Handle",
+      "examples": [
+        "111184/figshare.1234"
+      ]
+    },
+    "url": {
+      "type": "string",
+      "description": "Api endpoint",
+      "examples": [
+        "https://api.figshare.com/v2/collections/123"
+      ]
+    },
+    "timeline": {
+      "type": "object",
+      "description": "Nested object"
+    }
+  }
+}

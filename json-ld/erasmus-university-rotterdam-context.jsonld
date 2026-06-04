@@ -1,0 +1,67 @@
+{
+  "@context": {
+    "schema": "https://schema.org/",
+    "eur": "https://www.eur.nl/ns#",
+    "figshare": "https://api.figshare.com/v2/ns#",
+    "name": "schema:name",
+    "url": "schema:url",
+    "description": "schema:description",
+    "EducationalOrganization": "schema:CollegeOrUniversity",
+    "institution": {
+      "@id": "eur:institution",
+      "@type": "schema:CollegeOrUniversity"
+    },
+    "Article": {
+      "@id": "figshare:Article",
+      "@type": "schema:Dataset"
+    },
+    "Collection": {
+      "@id": "figshare:Collection",
+      "@type": "schema:Collection"
+    },
+    "Project": {
+      "@id": "figshare:Project",
+      "@type": "schema:Project"
+    },
+    "Author": {
+      "@id": "figshare:Author",
+      "@type": "schema:Person"
+    },
+    "id": "schema:identifier",
+    "title": "schema:name",
+    "doi": {
+      "@id": "schema:identifier",
+      "@type": "schema:PropertyValue"
+    },
+    "handle": "schema:identifier",
+    "created_date": {
+      "@id": "schema:dateCreated",
+      "@type": "schema:DateTime"
+    },
+    "modified_date": {
+      "@id": "schema:dateModified",
+      "@type": "schema:DateTime"
+    },
+    "defined_type_name": "schema:additionalType",
+    "thumb": {
+      "@id": "schema:thumbnailUrl",
+      "@type": "@id"
+    },
+    "url_public_html": {
+      "@id": "schema:url",
+      "@type": "@id"
+    },
+    "full_name": "schema:name",
+    "first_name": "schema:givenName",
+    "last_name": "schema:familyName",
+    "orcid_id": {
+      "@id": "schema:sameAs",
+      "@type": "@id"
+    },
+    "categories": "schema:about",
+    "authors": "schema:author"
+  },
+  "@type": "schema:CollegeOrUniversity",
+  "name": "Erasmus University Rotterdam",
+  "url": "https://www.eur.nl/en"
+}

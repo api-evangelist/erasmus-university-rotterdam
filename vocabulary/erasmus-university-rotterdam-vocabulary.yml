@@ -1,0 +1,63 @@
+---
+vocabulary:
+  name: Erasmus University Rotterdam Research Data Vocabulary
+  description: >-
+    Controlled vocabulary for the discoverable research-data surface of Erasmus
+    University Rotterdam (EUR). Terms are drawn from the Figshare v2 REST API
+    (https://api.figshare.com/v2) that backs the EUR research data repository at
+    datarepository.eur.nl, plus the OAI-PMH harvesting interfaces exposed by the
+    RePub institutional repository and the EUR & Erasmus MC Pure research portal.
+  version: '1.0.0'
+  terms:
+    - term: Article
+      definition: >-
+        A published research output (dataset, figure, media, software, thesis,
+        preprint, etc.) in the Figshare-hosted EUR research data repository,
+        identified by an integer id and typically a DOI and handle.
+      tags: [ figshare, object, research-data ]
+    - term: Collection
+      definition: A curated grouping of Figshare articles, with its own DOI and handle.
+      tags: [ figshare, object ]
+    - term: Project
+      definition: A Figshare workspace grouping articles and collaborators.
+      tags: [ figshare, object ]
+    - term: Author
+      definition: >-
+        A person credited on a Figshare article, carrying a full name, url_name,
+        and optional ORCID identifier.
+      tags: [ figshare, object, people ]
+    - term: Category
+      definition: >-
+        A subject classification term assigned to an article, mapped to an
+        external standard taxonomy via source_id and taxonomy_id.
+      tags: [ figshare, classification ]
+    - term: DOI
+      definition: >-
+        Digital Object Identifier minted for an article or collection
+        (e.g. 10.6084/m9.figshare.1434614).
+      tags: [ identifier, persistent-id ]
+    - term: Handle
+      definition: A Handle System persistent identifier assigned to an item.
+      tags: [ identifier, persistent-id ]
+    - term: defined_type
+      definition: >-
+        Integer code for the article item type (3 = dataset, 2 = media,
+        9 = software, 8 = thesis, 12 = preprint, etc.).
+      tags: [ figshare, enumeration ]
+    - term: Timeline
+      definition: Dates describing the lifecycle of an item (posted, submission, revision, publication).
+      tags: [ figshare, temporal ]
+    - term: OAI-PMH
+      definition: >-
+        Open Archives Initiative Protocol for Metadata Harvesting; the verb-based
+        XML interface used by RePub (repub.eur.nl/oai) and the EUR Pure portal
+        (pure.eur.nl/ws/oai) to expose publication metadata.
+      tags: [ protocol, metadata, harvesting ]
+    - term: RePub
+      definition: The Erasmus University Rotterdam institutional repository for scholarly publications.
+      tags: [ repository, open-access, eur ]
+    - term: Pure
+      definition: >-
+        Elsevier Pure (CRIS) instance powering the EUR & Erasmus MC Research
+        Information Portal.
+      tags: [ repository, cris, eur ]

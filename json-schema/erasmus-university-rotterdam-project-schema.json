@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/erasmus-university-rotterdam/main/json-schema/erasmus-university-rotterdam-project-schema.json",
+  "title": "Figshare Project",
+  "description": "A Figshare project grouping articles and collaborators.",
+  "type": "object",
+  "required": [
+    "created_date",
+    "id",
+    "modified_date",
+    "title",
+    "url"
+  ],
+  "properties": {
+    "url": {
+      "type": "string",
+      "description": "Api endpoint",
+      "examples": [
+        "http://api.figshare.com/v2/account/projects/1"
+      ]
+    },
+    "id": {
+      "type": "integer",
+      "description": "Project id",
+      "examples": [
+        1
+      ]
+    },
+    "title": {
+      "type": "string",
+      "description": "Project title",
+      "examples": [
+        "project"
+      ]
+    },
+    "created_date": {
+      "type": "string",
+      "description": "Date when project was created",
+      "examples": [
+        "2017-05-16T14:52:54Z"
+      ]
+    },
+    "modified_date": {
+      "type": "string",
+      "description": "Date when project was last modified",
+      "examples": [
+        "2017-05-16T14:52:54Z"
+      ]
+    }
+  }
+}

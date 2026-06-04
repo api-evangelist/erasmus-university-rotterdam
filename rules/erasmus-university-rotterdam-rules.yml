@@ -1,0 +1,67 @@
+---
+# Spectral ruleset for the EUR Research Data Repository (Figshare API v2)
+# Encodes patterns observed in the published Figshare OpenAPI 3.0.3 description
+# (https://docs.figshare.com/swagger.json), the spec backing
+# https://datarepository.eur.nl/ via https://api.figshare.com/v2.
+formats:
+  - oas3
+rules:
+  eur-figshare-server-defined:
+    description: The API must declare the Figshare v2 base server URL.
+    severity: error
+    given: $.servers
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: array
+          minItems: 1
+
+  eur-figshare-operation-tags:
+    description: Every operation should be tagged (Figshare groups by articles, collections, projects, etc.).
+    severity: warn
+    given: $.paths[*][get,post,put,delete,patch]
+    then:
+      field: tags
+      function: truthy
+
+  eur-figshare-operation-responses:
+    description: Every operation must define at least one response.
+    severity: error
+    given: $.paths[*][get,post,put,delete,patch].responses
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          minProperties: 1
+
+  eur-figshare-core-object-has-id:
+    description: Core resource schemas (Article, Collection, Project, Author) expose an integer id.
+    severity: warn
+    given: $.components.schemas[Article,Collection,Project,Author].properties.id
+    then:
+      field: type
+      function: enumeration
+      functionOptions:
+        values:
+          - integer
+
+  eur-figshare-doi-is-string:
+    description: DOI fields are represented as strings.
+    severity: warn
+    given: $.components.schemas[*].properties.doi
+    then:
+      field: type
+      function: enumeration
+      functionOptions:
+        values:
+          - string
+
+  eur-figshare-url-fields-format:
+    description: URL-bearing fields should declare a url/uri format.
+    severity: info
+    given: $.components.schemas[*].properties[url,figshare_url,thumb]
+    then:
+      field: format
+      function: truthy

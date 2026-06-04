@@ -71,6 +71,12 @@ apis:
     properties:
       - type: Documentation
         url: https://docs.figshare.com/
+      - type: OpenAPI
+        url: openapi/erasmus-university-rotterdam-figshare-data.yaml
+      - type: Vocabulary
+        url: vocabulary/erasmus-university-rotterdam-vocabulary.yml
+      - type: JSONLD
+        url: json-ld/erasmus-university-rotterdam-context.jsonld
 common:
   - type: Website
     url: https://www.eur.nl/en

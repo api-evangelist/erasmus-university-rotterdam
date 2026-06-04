@@ -1,0 +1,40 @@
+{
+  "id": 1434614,
+  "title": "Test article title",
+  "doi": "10.6084/m9.figshare.1434614",
+  "handle": "111184/figshare.1234",
+  "url": "http://api.figshare.com/articles/1434614",
+  "url_public_html": "https://figshare.com/articles/media/Test_article_title/1434614",
+  "url_public_api": "https://api.figshare.com/articles/1434614",
+  "url_private_html": "https://figshare.com/account/articles/1434614",
+  "url_private_api": "https://api.figshare.com/account/articles/1434614",
+  "timeline": {},
+  "thumb": "https://ndownloader.figshare.com/files/123456789/preview/12345678/thumb.png",
+  "defined_type": 3,
+  "defined_type_name": "media",
+  "created_date": "2017-05-18T11:49:03Z",
+  "figshare_url": "https://figshare.com/articles/dataset/Sample_EUR_dataset/2000005",
+  "download_disabled": false,
+  "files": [],
+  "authors": [
+    {
+      "id": 97657,
+      "full_name": "John Doe",
+      "first_name": "John",
+      "last_name": "Doe",
+      "is_active": false,
+      "url_name": "John_Doe",
+      "orcid_id": "1234-5678-9123-1234"
+    }
+  ],
+  "categories": [
+    {
+      "parent_id": 1,
+      "id": 11,
+      "title": "Anatomy",
+      "path": "/450/1024/6532",
+      "source_id": "300204",
+      "taxonomy_id": 4
+    }
+  ]
+}

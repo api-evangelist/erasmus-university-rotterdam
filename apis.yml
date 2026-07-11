@@ -78,6 +78,8 @@ apis:
       - type: JSONLD
         url: json-ld/erasmus-university-rotterdam-context.jsonld
 common:
+  - type: OAuthScopes
+    url: scopes/erasmus-university-rotterdam-scopes.yml
   - type: Website
     url: https://www.eur.nl/en
   - type: GitHub

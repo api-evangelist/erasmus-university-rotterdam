@@ -78,6 +78,8 @@ apis:
       - type: JSONLD
         url: json-ld/erasmus-university-rotterdam-context.jsonld
 common:
+  - type: AgenticAccess
+    url: agentic-access/erasmus-university-rotterdam-agentic-access.yml
   - type: VulnerabilityDisclosure
     url: security/erasmus-university-rotterdam-vulnerability-disclosure.yml
   - type: DomainSecurity

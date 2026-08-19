@@ -41,7 +41,7 @@ tags:
   - Netherlands
 created: '2026-06-03'
 modified: '2026-06-03'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: erasmus-university-rotterdam:repub-oai
   name: RePub OAI-PMH Metadata Feed

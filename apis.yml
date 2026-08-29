@@ -267,6 +267,9 @@ apis:
   - type: JSONLD
     url: json-ld/erasmus-university-rotterdam-context.jsonld
 common:
+  - type: CapabilityMap
+    url: capabilities/erasmus-university-rotterdam-capability-edges.yml
+    name: Erasmus University Rotterdam Business Capability Map
   - type: AgenticAccess
     url: agentic-access/erasmus-university-rotterdam-agentic-access.yml
   - type: VulnerabilityDisclosure

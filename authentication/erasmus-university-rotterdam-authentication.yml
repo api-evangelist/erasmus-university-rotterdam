@@ -1,18 +1,95 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/erasmus-university-rotterdam-figshare-data.yaml
+generated: '2026-08-30'
+method: probed
+source:
+- https://repub.eur.nl/oai?verb=Identify
+- https://api.eur.nl/
+- https://pure.eur.nl/ws/api/524/openapi.json
+- https://canvas.eur.nl/api/v1/courses
+- https://canvas.eur.nl/.well-known/openid-configuration
+- https://metadata.surfconext.nl/idps-metadata.xml
+note: >-
+  Rewritten 2026-08-30. The previous file at this path was derived from
+  openapi/_original/erasmus-university-rotterdam-figshare-data.yaml and described Figshare's
+  OAuth 2.0 authorization-code flow at figshare.com/account/applications/authorize — Figshare's
+  authentication, not Erasmus University Rotterdam's. It was removed with the rest of the
+  Figshare-derived set. What follows is probed from EUR's own and EUR-tenanted hosts.
 summary:
   types:
+  - none
+  - http_basic
   - oauth2
-  oauth2_flows:
-  - authorizationCode
+  - saml2
+  public_keyless_surfaces: 2
+  credentialed_surfaces: 3
 schemes:
-- name: OAuth2
+- name: None (open harvesting)
+  type: none
+  applies_to:
+  - https://repub.eur.nl/oai
+  - https://pure.eur.nl/ws/oai
+  x-operator: institution (repub) / tenant (pure)
+  evidence: >-
+    Both OAI-PMH endpoints answer Identify, ListMetadataFormats, ListSets and ListIdentifiers
+    with HTTP 200 and no credential of any kind. Open metadata harvesting is deliberate: EUR
+    is an OpenAIRE member and both endpoints are configured for OpenAIRE harvesting.
+- name: Kong gateway credential
+  type: http
+  scheme: basic
+  applies_to:
+  - https://api.eur.nl/
+  x-operator: institution
+  evidence: >-
+    GET https://api.eur.nl/ returns 401 with WWW-Authenticate: Basic realm="kong" and body
+    {"message":"Unauthorized"}. Unmatched paths return {"message":"no Route matched with those
+    values"}. This is a Kong API gateway operated by EUR (api.eur.nl -> api2.eur.nl ->
+    145.5.1.16, EUR's own address space) with HSTS max-age 31536000, X-Frame-Options DENY,
+    X-Content-Type-Options nosniff and Cache-control no-store. No route, no documentation and
+    no contract are exposed to an unauthenticated caller; the realm name is the only public
+    signal of what it is.
+- name: Elsevier Pure Web Service API key
+  type: apiKey
+  applies_to:
+  - https://pure.eur.nl/ws/api/
+  x-operator: tenant
+  evidence: >-
+    https://pure.eur.nl/ws/api redirects to /ws/api/documentation/index.html (canonical
+    https://api.elsevierpure.com/ws/api/documentation/index.html);
+    https://pure.eur.nl/ws/api/524/openapi.json returns 401 application/json. Pure Web Service
+    keys are issued per-integration by the institution's Pure administrators; there is no
+    self-serve signup.
+- name: Canvas OAuth 2.0 / LTI 1.3 OIDC
   type: oauth2
+  applies_to:
+  - https://canvas.eur.nl/api/v1/
+  - https://canvas.eur.nl/login/oauth2/
+  x-operator: tenant
   flows:
   - flow: authorizationCode
-    authorizationUrl: https://figshare.com/account/applications/authorize
-    tokenUrl: https://api.figshare.com/v2/token
-    scopes: 1
-  sources:
-  - openapi/erasmus-university-rotterdam-figshare-data.yaml
+    authorizationUrl: https://canvas.eur.nl/login/oauth2/auth
+    tokenUrl: https://canvas.eur.nl/login/oauth2/token
+    jwksUri: https://canvas.eur.nl/login/oauth2/jwks
+    scopes_supported:
+    - openid
+  evidence: >-
+    https://canvas.eur.nl/.well-known/openid-configuration returns 200 declaring issuer
+    https://canvas.eur.nl, the three endpoints above, RS256 id_token signing,
+    response_types_supported [code], grant_types_supported [authorization_code] and
+    token_endpoint_auth_methods_supported [client_secret_basic, client_secret_post].
+    https://canvas.eur.nl/api/v1/courses returns 401 {"status":"unauthenticated",...}.
+- name: SURFconext SAML 2.0 federated sign-in
+  type: saml2
+  applies_to:
+  - https://engine.surfconext.nl/authentication/idp/single-sign-on/
+  x-operator: tenant
+  evidence: >-
+    EUR's identity provider is registered in the SURFconext federation as entityID
+    https://sts.windows.net/715902d6-f63e-4b8d-929b-4bb170bad492/ (Microsoft Entra ID), with
+    persistent and transient NameIDFormat support and shibmd:Scope covering eur.nl,
+    student.eur.nl and eight faculty domains. This is how a human reaches every gated EUR
+    surface; it is not a machine credential and grants no programmatic access.
+absent:
+- what: Public API key issuance or self-serve developer signup
+  evidence: >-
+    No developer portal exists. developer.eur.nl and developers.eur.nl have no DNS record.
+    www.eur.nl/.well-known/api-catalog, /llms.txt and /openapi.json all return the site's
+    soft 404 ("Pagina niet gevonden", 146,268 bytes of HTML under an HTTP 404).

@@ -221,70 +221,23 @@ x-coverage:
     rulesets and the capability map keyed on the Figshare spec filenames. The relationship
     itself is also over: EUR left Figshare for DataverseNL on 30 October 2025.
 apis:
-- aid: erasmus-university-rotterdam:repub-oai
-  name: RePub OAI-PMH Metadata Harvesting Interface
-  x-operator: institution
-  x-operator-evidence: >-
-    repub.eur.nl is a CNAME to bib-app01.ubib.eur.nl -> 145.5.2.24. Both the alias and the
-    target are inside eur.nl, on Erasmus University Library's own subdomain, and there is no
-    vendor host anywhere in the chain. The Identify response self-reports as "Erasmus
-    University OAIPMH Feed" with two administrative contacts at @ubib.eur.nl. This is EUR's own
-    repository on EUR's own infrastructure — the one genuinely institution-operated, publicly
-    callable API surface the university has.
-  description: >-
-    OAI-PMH 2.0 harvesting interface for RePub, the Erasmus University Rotterdam institutional
-    publication repository. Keyless and live: Identify, ListMetadataFormats, ListSets and
-    ListIdentifiers all return 200 without a credential. Three metadata formats are offered
-    (oai_dc, mods and nl_didl, the Dutch DIDL profile used by national aggregators) and two
-    sets are configured (openaire, nwo — NWO Funded Research), which is evidence of a
-    deliberately configured repository rather than a default install. earliestDatestamp is
-    2023-11-24T00:00:00Z and the deletion policy is "transient", so tombstones are reported but
-    not guaranteed to persist. Protocol errors are returned inside a 200 envelope as
-    <error code="..."> — a harvester that branches on HTTP status alone will read every failure
-    as a success. EUR publishes no contract for this endpoint; the OpenAPI below was derived by
-    API Evangelist from live probes and is marked as such.
-  humanURL: https://repub.eur.nl/
-  baseURL: https://repub.eur.nl/oai
-  tags:
-  - Repository
-  - OAI-PMH
-  - Open Access
-  - Metadata
-  - Research
-  properties:
-  - type: OpenAPI
-    url: openapi/erasmus-university-rotterdam-repub-oai-pmh-openapi.yml
-  - type: Examples
-    url: examples/erasmus-university-rotterdam-examples.yml
-  - type: Errors
-    url: errors/erasmus-university-rotterdam-errors.yml
-  - type: Authentication
-    url: authentication/erasmus-university-rotterdam-authentication.yml
-  - type: Conformance
-    url: conformance/erasmus-university-rotterdam-education-standards.yml
-  - type: Documentation
-    url: https://repub.eur.nl/
-  - type: Specification
-    url: https://www.openarchives.org/OAI/openarchivesprotocol.html
 - aid: erasmus-university-rotterdam:api-gateway
   name: EUR API Gateway (api.eur.nl)
   x-operator: institution
   x-operator-evidence: >-
-    api.eur.nl is a CNAME to api2.eur.nl -> 145.5.1.16, inside the same EUR address space as
-    www.eur.nl (145.5.1.13) and repub.eur.nl (145.5.2.24). No vendor CNAME. The 401 carries
-    WWW-Authenticate: Basic realm="kong" and unmatched paths return Kong's own
-    {"message":"no Route matched with those values"}, so the gateway software is Kong but the
-    deployment, the address space and the route table are EUR's.
+    api.eur.nl is a CNAME to api2.eur.nl -> 145.5.1.16, inside the same EUR address space as www.eur.nl
+    (145.5.1.13) and repub.eur.nl (145.5.2.24). No vendor CNAME. The 401 carries WWW-Authenticate: Basic
+    realm="kong" and unmatched paths return Kong's own {"message":"no Route matched with those values"},
+    so the gateway software is Kong but the deployment, the address space and the route table are EUR's.
   description: >-
-    An EUR-operated Kong API gateway. It is unambiguously live and unambiguously closed: the
-    root returns 401 application/json {"message":"Unauthorized"} with
-    WWW-Authenticate: Basic realm="kong", HSTS max-age 31536000, X-Frame-Options DENY,
-    X-Content-Type-Options nosniff and Cache-control no-store, while /openapi.json,
-    /swagger.json, /v1, /api, /health and /status all return Kong's no-route 404. Recorded
-    because it is a real institution-operated API surface and its existence is a fact about
-    EUR's programmable footprint — but no route, no reference, no contract and no signup are
-    exposed to the public internet, and nothing about what it serves can be established from
-    outside. No OpenAPI is saved for it, because none exists to save.
+    An EUR-operated Kong API gateway. It is unambiguously live and unambiguously closed: the root returns
+    401 application/json {"message":"Unauthorized"} with WWW-Authenticate: Basic realm="kong", HSTS max-age
+    31536000, X-Frame-Options DENY, X-Content-Type-Options nosniff and Cache-control no-store, while /openapi.json,
+    /swagger.json, /v1, /api, /health and /status all return Kong's no-route 404. Recorded because it
+    is a real institution-operated API surface and its existence is a fact about EUR's programmable footprint
+    — but no route, no reference, no contract and no signup are exposed to the public internet, and nothing
+    about what it serves can be established from outside. No OpenAPI is saved for it, because none exists
+    to save.
   humanURL: https://www.eur.nl/en
   baseURL: https://api.eur.nl
   tags:
@@ -300,30 +253,25 @@ apis:
   name: EUR Research Repository — Pure OAI-PMH (Elsevier tenancy)
   x-operator: tenant
   x-operator-evidence: >-
-    pure.eur.nl is a CNAME to erasmus.elsevierpure.com -> eu.prod.elsevierpure.com ->
-    eu.prod.elsevierpure.com.cdn.cloudflare.net. That is a platform CNAME, not a CDN in front
-    of an EUR origin: the repository software, the hosting and the OAI-PMH implementation are
-    Elsevier Pure's, and the Identify adminEmail is purehosted@elsevier.com. The records, the
-    rightsManifest ("Copyright (c) Erasmus University Rotterdam") and the OpenAIRE Owner
-    declaration (DisplayName "Erasmus University Rotterdam", OrgUnit acronym EUR) are EUR's.
-    Real institutional fact, vendor engineering — recorded as a relationship, with no Pure
-    contract saved under EUR's slug.
+    pure.eur.nl is a CNAME to erasmus.elsevierpure.com -> eu.prod.elsevierpure.com -> eu.prod.elsevierpure.com.cdn.cloudflare.net.
+    That is a platform CNAME, not a CDN in front of an EUR origin: the repository software, the hosting
+    and the OAI-PMH implementation are Elsevier Pure's, and the Identify adminEmail is purehosted@elsevier.com.
+    The records, the rightsManifest ("Copyright (c) Erasmus University Rotterdam") and the OpenAIRE Owner
+    declaration (DisplayName "Erasmus University Rotterdam", OrgUnit acronym EUR) are EUR's. Real institutional
+    fact, vendor engineering — recorded as a relationship, with no Pure contract saved under EUR's slug.
   description: >-
-    The EUR & Erasmus MC research information portal runs on Elsevier Pure (CRIS). Its OAI-PMH
-    endpoint is live (Identify 200, repositoryName "EUR Research Repository", earliestDatestamp
-    2021-06-14T10:37:49Z) and declares the OpenAIRE Guidelines for CRIS Managers CERIF-XML 1.2
-    profile in its Identify description. Seven metadata formats are offered, including
-    oai_cerif_openaire; ListSets returns the CERIF entity sets (openaire_cris_publications,
-    _patents, _persons, _orgunits, _events, _equipments, _products) alongside persons:all,
-    publications:all, publications:withFiles and per-year publication sets from 1970. Note that
-    the OpenAIRE Service block in Pure's own Identify response advertises WebsiteURL
-    https://pure.eur.nl/portal, which returns 404 — the live portal is https://pure.eur.nl/, and
-    the vendor's own machine-readable pointer is stale. Corrects
-    the June 2026 profile, which recorded an HTTP 500 on Identify — the endpoint answers
-    normally as of 2026-08-30. The Pure Web Service API also exists at pure.eur.nl/ws/api but
-    is Elsevier's contract, key-gated per integration
-    (pure.eur.nl/ws/api/524/openapi.json returns 401), and its documentation page declares a
-    canonical URL of api.elsevierpure.com — so it is not saved here.
+    The EUR & Erasmus MC research information portal runs on Elsevier Pure (CRIS). Its OAI-PMH endpoint
+    is live (Identify 200, repositoryName "EUR Research Repository", earliestDatestamp 2021-06-14T10:37:49Z)
+    and declares the OpenAIRE Guidelines for CRIS Managers CERIF-XML 1.2 profile in its Identify description.
+    Seven metadata formats are offered, including oai_cerif_openaire; ListSets returns the CERIF entity
+    sets (openaire_cris_publications, _patents, _persons, _orgunits, _events, _equipments, _products)
+    alongside persons:all, publications:all, publications:withFiles and per-year publication sets from
+    1970. Note that the OpenAIRE Service block in Pure's own Identify response advertises WebsiteURL https://pure.eur.nl/portal,
+    which returns 404 — the live portal is https://pure.eur.nl/, and the vendor's own machine-readable
+    pointer is stale. Corrects the June 2026 profile, which recorded an HTTP 500 on Identify — the endpoint
+    answers normally as of 2026-08-30. The Pure Web Service API also exists at pure.eur.nl/ws/api but
+    is Elsevier's contract, key-gated per integration (pure.eur.nl/ws/api/524/openapi.json returns 401),
+    and its documentation page declares a canonical URL of api.elsevierpure.com — so it is not saved here.
   humanURL: https://pure.eur.nl/
   baseURL: https://pure.eur.nl/ws/oai
   tags:
@@ -337,30 +285,29 @@ apis:
   - type: Conformance
     url: conformance/erasmus-university-rotterdam-education-standards.yml
   - type: Documentation
-    url: https://www.eur.nl/en/library/research-support/eur-erasmus-mc-research-information-portal-and-pure-repository
+    url: >-
+      https://www.eur.nl/en/library/research-support/eur-erasmus-mc-research-information-portal-and-pure-repository
   - type: VendorAPI
     url: https://pure.eur.nl/ws/api
 - aid: erasmus-university-rotterdam:edr-dataverse
   name: EUR Data Repository (DataverseNL tenancy)
   x-operator: tenant
   x-operator-evidence: >-
-    The EUR Data Repository lives at https://dataverse.nl/dataverse/eur — a collection inside
-    DataverseNL, the national Dataverse service operated by DANS. The hostname is not under
-    eur.nl at all, and eur.dataverse.nl and dataverse.eur.nl both return NXDOMAIN. EUR owns the
-    collection and the data; DANS runs the software, the host and the API.
+    The EUR Data Repository lives at https://dataverse.nl/dataverse/eur — a collection inside DataverseNL,
+    the national Dataverse service operated by DANS. The hostname is not under eur.nl at all, and eur.dataverse.nl
+    and dataverse.eur.nl both return NXDOMAIN. EUR owns the collection and the data; DANS runs the software,
+    the host and the API.
   description: >-
-    EUR's institutional research DATA repository, distinct from the RePub publication
-    repository. This entry replaces the ten Figshare contracts the June 2026 profile saved
-    here. Two things were wrong with that attribution: api.figshare.com/v2 is the generic
-    Figshare host that every Figshare customer shares — twenty-five universities in this cohort
-    claimed it — and EUR's Figshare tenancy has since ENDED. Erasmus University Library
-    announced the migration to DataverseNL on 30 October 2025, and datarepository.eur.nl, the
-    Figshare-era hostname the removed vocabulary and rulesets still cited, now returns
-    NXDOMAIN. DataverseNL exposes the standard Dataverse native REST API at dataverse.nl/api,
-    but the host sits behind an Anubis proof-of-work bot challenge: /api/info/version,
-    /api/dataverses/eur and /api/search all return the challenge page rather than JSON to a
-    scripted client. The host is live; we are the ones excluded. No Dataverse contract is saved
-    under EUR's slug — it belongs to the Dataverse project and to DANS.
+    EUR's institutional research DATA repository, distinct from the RePub publication repository. This
+    entry replaces the ten Figshare contracts the June 2026 profile saved here. Two things were wrong
+    with that attribution: api.figshare.com/v2 is the generic Figshare host that every Figshare customer
+    shares — twenty-five universities in this cohort claimed it — and EUR's Figshare tenancy has since
+    ENDED. Erasmus University Library announced the migration to DataverseNL on 30 October 2025, and datarepository.eur.nl,
+    the Figshare-era hostname the removed vocabulary and rulesets still cited, now returns NXDOMAIN. DataverseNL
+    exposes the standard Dataverse native REST API at dataverse.nl/api, but the host sits behind an Anubis
+    proof-of-work bot challenge: /api/info/version, /api/dataverses/eur and /api/search all return the
+    challenge page rather than JSON to a scripted client. The host is live; we are the ones excluded.
+    No Dataverse contract is saved under EUR's slug — it belongs to the Dataverse project and to DANS.
   humanURL: https://dataverse.nl/dataverse/eur
   baseURL: https://dataverse.nl/api
   tags:
@@ -380,18 +327,16 @@ apis:
   name: Canvas LMS (Instructure tenancy) — REST + LTI 1.3
   x-operator: tenant
   x-operator-evidence: >-
-    canvas.eur.nl is a CNAME to EUR-vanity.instructure.com -> 108.139.47.x (CloudFront).
-    Instructure Canvas, EUR tenancy. The courses, enrolments and LTI tool registrations are
-    EUR's; the platform, the REST API and the LTI 1.3 implementation are Instructure's.
+    canvas.eur.nl is a CNAME to EUR-vanity.instructure.com -> 108.139.47.x (CloudFront). Instructure Canvas,
+    EUR tenancy. The courses, enrolments and LTI tool registrations are EUR's; the platform, the REST
+    API and the LTI 1.3 implementation are Instructure's.
   description: >-
-    EUR's learning management system. Live and credentialed: /api/v1/courses returns 401
-    {"status":"unauthenticated","errors":[{"message":"user authorisation required"}]}. Two
-    machine-readable surfaces answer without a credential and establish real LTI 1.3
-    conformance: /api/lti/security/jwks returns a live RSA JWKS, and
-    /.well-known/openid-configuration returns the platform's OIDC metadata (issuer
-    https://canvas.eur.nl, RS256, authorization_code grant, the /login/oauth2 endpoint
-    triple). Recorded as a tenancy — Canvas's REST contract is Instructure's and is not saved
-    under EUR's slug.
+    EUR's learning management system. Live and credentialed: /api/v1/courses returns 401 {"status":"unauthenticated","errors":[{"message":"user
+    authorisation required"}]}. Two machine-readable surfaces answer without a credential and establish
+    real LTI 1.3 conformance: /api/lti/security/jwks returns a live RSA JWKS, and /.well-known/openid-configuration
+    returns the platform's OIDC metadata (issuer https://canvas.eur.nl, RS256, authorization_code grant,
+    the /login/oauth2 endpoint triple). Recorded as a tenancy — Canvas's REST contract is Instructure's
+    and is not saved under EUR's slug.
   humanURL: https://canvas.eur.nl/
   baseURL: https://canvas.eur.nl/api/v1
   tags:
@@ -410,18 +355,17 @@ apis:
   name: OSIRIS Course Catalogue (Caci tenancy)
   x-operator: tenant
   x-operator-evidence: >-
-    courses.eur.nl and osiris.eur.nl both redirect to eur.osiris-student.nl -> 213.206.219.219.
-    osiris-student.nl is Caci's OSIRIS student-information platform; eur. is EUR's tenant
-    subdomain on it. The curriculum is EUR's, the software and the API are Caci's.
+    courses.eur.nl and osiris.eur.nl both redirect to eur.osiris-student.nl -> 213.206.219.219. osiris-student.nl
+    is Caci's OSIRIS student-information platform; eur. is EUR's tenant subdomain on it. The curriculum
+    is EUR's, the software and the API are Caci's.
   description: >-
-    EUR's course catalogue and student self-service, on Caci's OSIRIS. The public entry points
-    courses.eur.nl and osiris.eur.nl both land on an Angular SPA shell that returns HTTP 200
-    with no data, which is why link presence proves nothing here. The service beneath it is
-    real: POST /student/osiris/student/cursussen/zoeken returns a structured OSIRIS Link JSON
-    envelope ({"result":"FAILED","failure":{"message":"Er is een interne fout opgetreden in
-    OSIRIS Link","code":500,...}}) rather than an HTML error, and the same path returns 405 to
-    a GET — a live JSON API that requires the vendor's request shape. No contract is published
-    and none is saved here; the course catalogue is one of the surface classes a university
+    EUR's course catalogue and student self-service, on Caci's OSIRIS. The public entry points courses.eur.nl
+    and osiris.eur.nl both land on an Angular SPA shell that returns HTTP 200 with no data, which is why
+    link presence proves nothing here. The service beneath it is real: POST /student/osiris/student/cursussen/zoeken
+    returns a structured OSIRIS Link JSON envelope ({"result":"FAILED","failure":{"message":"Er is een
+    interne fout opgetreden in OSIRIS Link","code":500,...}}) rather than an HTML error, and the same
+    path returns 405 to a GET — a live JSON API that requires the vendor's request shape. No contract
+    is published and none is saved here; the course catalogue is one of the surface classes a university
     genuinely runs, and at EUR it runs on somebody else's platform.
   humanURL: https://courses.eur.nl/
   baseURL: https://eur.osiris-student.nl/student/osiris/student
@@ -437,25 +381,22 @@ apis:
   name: SURFconext / eduGAIN Identity Provider
   x-operator: tenant
   x-operator-evidence: >-
-    The registration, the ten shibmd:Scope declarations (eur.nl, student.eur.nl, iss.nl,
-    rsm.nl, ese.eur.nl, law.eur.nl, essb.eur.nl, eshpm.eur.nl, esphil.eur.nl, eshcc.eur.nl) and
-    the md:Organization block pointing at http://www.eur.nl/ are EUR's. The engineering is not:
-    the entityID is a Microsoft Entra ID tenant on sts.windows.net, and the single
-    SingleSignOnService Location is https://engine.surfconext.nl/authentication/idp/... — SURF's
-    hub-and-spoke proxy. EUR runs no IdP host of its own: idp.eur.nl and adfs.eur.nl return
-    NXDOMAIN, and sso.eur.nl resolves to the generic EUR web front end and publishes no SAML
-    service. Marked tenant rather than institution on that evidence.
+    The registration, the ten shibmd:Scope declarations (eur.nl, student.eur.nl, iss.nl, rsm.nl, ese.eur.nl,
+    law.eur.nl, essb.eur.nl, eshpm.eur.nl, esphil.eur.nl, eshcc.eur.nl) and the md:Organization block
+    pointing at http://www.eur.nl/ are EUR's. The engineering is not: the entityID is a Microsoft Entra
+    ID tenant on sts.windows.net, and the single SingleSignOnService Location is https://engine.surfconext.nl/authentication/idp/...
+    — SURF's hub-and-spoke proxy. EUR runs no IdP host of its own: idp.eur.nl and adfs.eur.nl return NXDOMAIN,
+    and sso.eur.nl resolves to the generic EUR web front end and publishes no SAML service. Marked tenant
+    rather than institution on that evidence.
   description: >-
-    EUR's identity federation entry — the machine-readable institutional surface universities
-    almost never get catalogued for. EUR is registered as an identity provider in SURFconext,
-    the Dutch national research and education federation and the country's eduGAIN participant.
-    The entity appears in https://metadata.surfconext.nl/idps-metadata.xml (205 entities) with
-    entityID https://sts.windows.net/715902d6-f63e-4b8d-929b-4bb170bad492/, an IDPSSODescriptor
-    supporting urn:oasis:names:tc:SAML:2.0:protocol, an RSA signing KeyDescriptor, persistent
-    and transient NameIDFormat support, and an mdui:UIInfo block carrying DisplayName "Erasmus
-    University Rotterdam" / "Erasmus Universiteit Rotterdam" and the logo at
-    static.surfconext.nl/logos/idp/eur.png. This is how a human reaches every gated EUR
-    surface; it grants no programmatic access on its own.
+    EUR's identity federation entry — the machine-readable institutional surface universities almost never
+    get catalogued for. EUR is registered as an identity provider in SURFconext, the Dutch national research
+    and education federation and the country's eduGAIN participant. The entity appears in https://metadata.surfconext.nl/idps-metadata.xml
+    (205 entities) with entityID https://sts.windows.net/715902d6-f63e-4b8d-929b-4bb170bad492/, an IDPSSODescriptor
+    supporting urn:oasis:names:tc:SAML:2.0:protocol, an RSA signing KeyDescriptor, persistent and transient
+    NameIDFormat support, and an mdui:UIInfo block carrying DisplayName "Erasmus University Rotterdam"
+    / "Erasmus Universiteit Rotterdam" and the logo at static.surfconext.nl/logos/idp/eur.png. This is
+    how a human reaches every gated EUR surface; it grants no programmatic access on its own.
   humanURL: https://www.surfconext.nl/
   baseURL: https://metadata.surfconext.nl/idps-metadata.xml
   tags:
@@ -469,6 +410,28 @@ apis:
     url: conformance/erasmus-university-rotterdam-education-standards.yml
   - type: Metadata
     url: https://metadata.surfconext.nl/idps-metadata.xml
+- aid: erasmus-university-rotterdam:erasmus-university-rotterdam-oai-pmh-api
+  name: Erasmus University Rotterdam Oai Pmh API
+  description: OAI-PMH 2.0 verbs, dispatched by the `verb` query parameter on a single path.
+  humanURL: https://repub.eur.nl/
+  baseURL: https://repub.eur.nl/oai
+  tags:
+  - oai-pmh
+  properties:
+  - type: OpenAPI
+    url: openapi/erasmus-university-rotterdam-oai-pmh-api-openapi.yml
+  - type: Examples
+    url: examples/erasmus-university-rotterdam-examples.yml
+  - type: Errors
+    url: errors/erasmus-university-rotterdam-errors.yml
+  - type: Authentication
+    url: authentication/erasmus-university-rotterdam-authentication.yml
+  - type: Conformance
+    url: conformance/erasmus-university-rotterdam-education-standards.yml
+  - type: Documentation
+    url: https://repub.eur.nl/
+  - type: Specification
+    url: https://www.openarchives.org/OAI/openarchivesprotocol.html
 common:
 - type: Website
   url: https://www.eur.nl/en

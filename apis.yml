@@ -277,6 +277,13 @@ apis:
   tags:
   - Repository
   - OAI-PMH
+  - CRI
+  - Pure
+  - Research
+  - Tenants
+  tags_raw:
+  - Repository
+  - OAI-PMH
   - CRIS
   - Pure
   - Research
@@ -315,6 +322,12 @@ apis:
   - Repository
   - Dataverse
   - Open Data
+  - Tenants
+  tags_raw:
+  - Research Data
+  - Repository
+  - Dataverse
+  - Open Data
   - Tenant
   properties:
   - type: Documentation
@@ -340,6 +353,11 @@ apis:
   humanURL: https://canvas.eur.nl/
   baseURL: https://canvas.eur.nl/api/v1
   tags:
+  - Learning Management
+  - LTI
+  - Canvas
+  - Tenants
+  tags_raw:
   - Learning Management
   - LTI
   - Canvas
@@ -370,6 +388,11 @@ apis:
   humanURL: https://courses.eur.nl/
   baseURL: https://eur.osiris-student.nl/student/osiris/student
   tags:
+  - Course Catalog
+  - Student Information System
+  - OSIRIS
+  - Tenants
+  tags_raw:
   - Course Catalog
   - Student Information System
   - OSIRIS
@@ -404,6 +427,12 @@ apis:
   - SAML
   - eduGAIN
   - SURFconext
+  - Tenants
+  tags_raw:
+  - Identity Federation
+  - SAML
+  - eduGAIN
+  - SURFconext
   - Tenant
   properties:
   - type: Conformance
@@ -416,6 +445,8 @@ apis:
   humanURL: https://repub.eur.nl/
   baseURL: https://repub.eur.nl/oai
   tags:
+  - OAI-PMH
+  tags_raw:
   - oai-pmh
   properties:
   - type: OpenAPI

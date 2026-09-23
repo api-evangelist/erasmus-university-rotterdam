@@ -4,7 +4,7 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Erasmus University Rotterdam
 providerId: erasmus-university-rotterdam
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-08-30'
 reconciled: false
 tags:
 - Education
@@ -12,11 +12,15 @@ tags:
 - University
 - Plans
 description: >-
-  Erasmus University Rotterdam is a non-commercial higher-education institution; its APIs are not sold
-  as a commercial product. Public APIs (library, repository, course, and open-metadata
-  interfaces) are offered free of charge, typically for non-commercial use. Most
-  administrative and identity APIs are not openly self-service and require institutional
-  affiliation, credentials, or federation membership rather than a paid plan.
+  Erasmus University Rotterdam is a non-commercial higher-education institution and sells no API.
+  Re-verified 2026-08-30: the one institution-operated public API, the RePub OAI-PMH endpoint at
+  repub.eur.nl/oai, is free and requires no key, no registration and no account of any kind. The
+  Pure OAI-PMH endpoint is likewise open, though it is an Elsevier tenancy rather than EUR's own
+  service. Everything else is affiliation-gated rather than priced: api.eur.nl (EUR's own Kong
+  gateway) answers 401, the Pure Web Service API is key-issued per integration by Pure
+  administrators, and Canvas, OSIRIS and the research data repository all sit behind SURFconext
+  federated sign-in. There is no developer portal, no self-serve signup and no pricing page —
+  developer.eur.nl and developers.eur.nl have no DNS record.
 notes: >-
   No published per-seat or per-call commercial pricing. "Free / Open" reflects open
   public endpoints; "Affiliation / Credentialed" reflects access gated by institutional

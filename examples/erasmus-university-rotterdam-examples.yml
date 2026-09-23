@@ -1,0 +1,46 @@
+generated: '2026-08-30'
+method: probed
+x-operator: institution
+source: https://repub.eur.nl/oai
+note: >-
+  Provenance manifest for the captured response bodies in this directory. Every file beside
+  this one is an UNEDITED wire capture taken from the live RePub OAI-PMH endpoint on
+  2026-08-30 — not a hand-written or model-written sample. They are kept pristine so they
+  remain usable as evidence; this manifest carries the provenance instead of stamping the
+  captures themselves. The Figshare payload examples that previously sat in this directory
+  (article, collection and project objects at api.figshare.com/v2, with figshare.com DOIs
+  such as 10.6084/m9.figshare.1434614) were removed in the same pass: they described
+  Figshare's product, not Erasmus University Rotterdam's.
+examples:
+- file: erasmus-university-rotterdam-repub-oai-identify-response.xml
+  request: GET https://repub.eur.nl/oai?verb=Identify
+  status: 200
+  content_type: text/xml; charset=UTF-8
+  captured: '2026-08-30T19:26:20Z'
+  describes: >-
+    Repository self-description: repositoryName "Erasmus University OAIPMH Feed",
+    protocolVersion 2.0, two @ubib.eur.nl adminEmail contacts, earliestDatestamp
+    2023-11-24T00:00:00Z, deletedRecord transient, granularity YYYY-MM-DDThh:mm:ssZ.
+- file: erasmus-university-rotterdam-repub-oai-listmetadataformats-response.xml
+  request: GET https://repub.eur.nl/oai?verb=ListMetadataFormats
+  status: 200
+  content_type: text/xml; charset=UTF-8
+  captured: '2026-08-30T19:26:20Z'
+  describes: Three metadata formats offered — oai_dc, mods and nl_didl (Dutch DIDL profile).
+- file: erasmus-university-rotterdam-repub-oai-listsets-response.xml
+  request: GET https://repub.eur.nl/oai?verb=ListSets
+  status: 200
+  content_type: text/xml; charset=UTF-8
+  captured: '2026-08-30T19:26:20Z'
+  describes: >-
+    Two configured sets — openaire ("OpenAIRE") and nwo ("NWO Funded Research") — evidence of
+    a deliberately configured repository rather than a default install.
+- file: erasmus-university-rotterdam-repub-oai-error-badverb-response.xml
+  request: GET https://repub.eur.nl/oai?verb=BadVerb
+  status: 200
+  content_type: text/xml; charset=UTF-8
+  captured: '2026-08-30T19:26:21Z'
+  describes: >-
+    Deliberate error probe. Returns <error code="badVerb">Illegal verb: BadVerb</error>
+    inside a 200 envelope — correct OAI-PMH error semantics, and the reason a caller must
+    parse the body rather than branch on HTTP status.

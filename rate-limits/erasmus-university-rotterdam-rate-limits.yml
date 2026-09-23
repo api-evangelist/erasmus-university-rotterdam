@@ -4,7 +4,7 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Erasmus University Rotterdam
 providerId: erasmus-university-rotterdam
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-08-30'
 reconciled: false
 tags:
 - Education
@@ -12,11 +12,18 @@ tags:
 - University
 - Rate Limiting
 description: >-
-  Erasmus University Rotterdam does not publish a unified public rate-limit table across its APIs. Open
-  metadata and harvesting endpoints (OAI-PMH, IIIF, library) may throttle large-scale
-  or automated harvesting; clients should harvest politely, honor Retry-After, and
-  contact the relevant service for bulk access.
-notes: Confirm per-service limits with each API's documentation; harvest responsibly.
+  Erasmus University Rotterdam publishes no rate-limit table for any of its surfaces. Re-verified
+  2026-08-30: the two open OAI-PMH endpoints (repub.eur.nl/oai, institution-operated;
+  pure.eur.nl/ws/oai, an Elsevier Pure tenancy) returned no rate-limit or Retry-After header on
+  any probed verb, and neither documents a harvesting quota. OAI-PMH flow control is by
+  resumptionToken rather than by a limit header, so a harvester should page on the token, honour
+  any Retry-After it does receive, and contact Erasmus University Library for bulk access.
+  https://api.eur.nl, EUR's own Kong gateway, returns 401 before any rate-limit header is emitted,
+  so nothing can be said about its limits from outside. No IIIF or library-catalogue API was
+  found on any EUR host — an earlier version of this file named both and neither was verified.
+notes: >-
+  Confirm per-service limits with each service directly; harvest responsibly. Probed 2026-08-30 —
+  no rate-limit headers observed on any open EUR surface.
 sources:
 - https://raw.githubusercontent.com/api-evangelist/erasmus-university-rotterdam/refs/heads/main/apis.yml
 responseCodes:

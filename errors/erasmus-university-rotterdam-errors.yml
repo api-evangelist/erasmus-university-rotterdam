@@ -1,0 +1,77 @@
+generated: '2026-08-30'
+method: probed
+x-operator: institution
+source:
+- https://repub.eur.nl/oai?verb=BadVerb
+- https://repub.eur.nl/openapi.json
+- https://www.openarchives.org/OAI/openarchivesprotocol.html#ErrorConditions
+applies_to: openapi/erasmus-university-rotterdam-repub-oai-pmh-openapi.yml
+note: >-
+  Error semantics of the one public, institution-operated API surface Erasmus University
+  Rotterdam runs. The defining property, confirmed by live probe, is that protocol failures
+  are returned INSIDE an HTTP 200 envelope as an <error code="..."> element — an agent or
+  harvester that branches on HTTP status alone will read every failure as a success. Only
+  the badVerb condition was exercised against the live host; the remaining conditions are
+  the OAI-PMH 2.0 vocabulary this endpoint implements and are marked `probed: false`
+  accordingly rather than being presented as observed.
+transport:
+  protocol_errors_use_http_status: false
+  envelope: <OAI-PMH>/<error code="..."> under HTTP 200
+  content_type: text/xml; charset=UTF-8
+conditions:
+- code: badVerb
+  http_status: 200
+  probed: true
+  observed: 'Illegal verb: BadVerb'
+  meaning: The verb argument is missing, repeated, or not a legal OAI-PMH verb.
+- code: badArgument
+  http_status: 200
+  probed: false
+  meaning: A required argument is missing, an argument is repeated, or an argument is illegal for the verb.
+- code: badResumptionToken
+  http_status: 200
+  probed: false
+  meaning: The resumptionToken is invalid or has expired.
+- code: cannotDisseminateFormat
+  http_status: 200
+  probed: false
+  meaning: >-
+    The metadataPrefix is not supported by the item or the repository. This endpoint supports
+    oai_dc, mods and nl_didl only.
+- code: idDoesNotExist
+  http_status: 200
+  probed: false
+  meaning: The identifier is unknown or illegal in this repository (form oai:repub.eur.nl:<id>).
+- code: noRecordsMatch
+  http_status: 200
+  probed: false
+  meaning: The from/until/set/metadataPrefix combination selects an empty list.
+- code: noMetadataFormats
+  http_status: 200
+  probed: false
+  meaning: No metadata formats are available for the specified item.
+- code: noSetHierarchy
+  http_status: 200
+  probed: false
+  meaning: >-
+    Not expected from this endpoint — it does support sets (openaire, nwo) and answers ListSets.
+http_conditions:
+- status: 404
+  probed: true
+  observed: >-
+    GET https://repub.eur.nl/openapi.json returns 404 text/html (13,619 bytes). Paths other
+    than /oai on this host fall through to the repository web application's own 404 page,
+    which is HTML, not an OAI-PMH envelope.
+- status: 200
+  probed: true
+  observed: >-
+    GET https://repub.eur.nl/ returns 200 text/html — the human repository interface, not an
+    API surface. Do not treat a 200 on this host as evidence of an API.
+tombstones:
+  supported: true
+  probed: true
+  observed: >-
+    ListIdentifiers with metadataPrefix=oai_dc returns <header status="deleted"> entries, e.g.
+    oai:repub.eur.nl:17433 datestamp 2026-07-02T12:22:13Z. Consistent with the declared
+    deletedRecord policy of "transient": deletions are reported but not guaranteed to persist,
+    so a harvester cannot rely on tombstones for a complete deletion history.

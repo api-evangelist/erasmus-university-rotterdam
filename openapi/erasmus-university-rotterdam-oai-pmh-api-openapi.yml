@@ -1,0 +1,119 @@
+openapi: 3.2.0
+info:
+  title: RePub Metadata Harvesting Interface Oai Pmh API
+  summary: The OAI-PMH 2.0 harvesting endpoint of RePub, the Erasmus University Rotterdam institutional publication repository — the one public, keyless, institution-operated API surface EUR runs on its own infrastructure.
+  description: RePub (https://repub.eur.nl) is the institutional repository of Erasmus University Rotterdam, operated by Erasmus University Library.
+  version: '2.0'
+  contact:
+    name: Erasmus University Library — RePub administration
+    email: opdecoul@ubib.eur.nl
+    url: https://repub.eur.nl/
+  license:
+    name: OAI-PMH 2.0 protocol (Open Archives Initiative)
+    url: https://www.openarchives.org/OAI/openarchivesprotocol.html
+servers:
+- url: https://repub.eur.nl
+  description: RePub production, Erasmus University Library (verified live 2026-08-30)
+security: []
+tags:
+- name: oai pmh
+  description: OAI-PMH 2.0 verbs, dispatched by the `verb` query parameter on a single path.
+paths:
+  /oai:
+    get:
+      tags:
+      - oai pmh
+      summary: Dispatch an OAI-PMH 2.0 verb
+      description: All six OAI-PMH verbs are dispatched from this single path via the required `verb` query parameter. The response is always an `` XML envelope carrying either the verb's payload or an `` element; protocol-level failures are reported inside a 200 response, so callers must parse the body rather than branch on HTTP status. Verified live 2026-08-30 for Identify, ListMetadataFormats, ListSets, ListIdentifiers and the badVerb error path.
+      operationId: oaiPmhDispatch
+      parameters:
+      - name: verb
+        in: query
+        required: true
+        description: The OAI-PMH verb to execute.
+        schema:
+          type: string
+          enum:
+          - Identify
+          - ListMetadataFormats
+          - ListSets
+          - ListIdentifiers
+          - ListRecords
+          - GetRecord
+        example: Identify
+      - name: metadataPrefix
+        in: query
+        required: false
+        description: 'Metadata format to return. Required for ListIdentifiers, ListRecords and GetRecord. Observed live on this endpoint: oai_dc, mods, nl_didl.'
+        schema:
+          type: string
+          enum:
+          - oai_dc
+          - mods
+          - nl_didl
+        example: oai_dc
+      - name: set
+        in: query
+        required: false
+        description: 'Restrict the selective harvest to a configured set. Observed live on this endpoint: `openaire` (OpenAIRE) and `nwo` (NWO Funded Research).'
+        schema:
+          type: string
+          enum:
+          - openaire
+          - nwo
+      - name: identifier
+        in: query
+        required: false
+        description: OAI identifier of a single record. Required for GetRecord. Observed form on this endpoint is `oai:repub.eur.nl:<numeric-id>`, e.g. `oai:repub.eur.nl:17433`.
+        schema:
+          type: string
+          pattern: ^oai:repub\.eur\.nl:[0-9]+$
+        example: oai:repub.eur.nl:17433
+      - name: from
+        in: query
+        required: false
+        description: Lower bound of the datestamp range for a selective harvest. The repository reports granularity YYYY-MM-DDThh:mm:ssZ and earliestDatestamp 2023-11-24T00:00:00Z.
+        schema:
+          type: string
+          format: date-time
+      - name: until
+        in: query
+        required: false
+        description: Upper bound of the datestamp range for a selective harvest.
+        schema:
+          type: string
+          format: date-time
+      - name: resumptionToken
+        in: query
+        required: false
+        description: Flow-control token returned by a previous incomplete list response. Exclusive of all other arguments except `verb`.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: An OAI-PMH 2.0 envelope. Carries the verb's payload on success, or an `<error code="...">` element on a protocol-level failure — both under HTTP 200.
+          content:
+            text/xml:
+              schema:
+                type: string
+                contentMediaType: text/xml
+              examples:
+                identify:
+                  summary: Identify (captured live 2026-08-30)
+                  externalValue: ../examples/erasmus-university-rotterdam-repub-oai-identify-response.xml
+                listMetadataFormats:
+                  summary: ListMetadataFormats (captured live 2026-08-30)
+                  externalValue: ../examples/erasmus-university-rotterdam-repub-oai-listmetadataformats-response.xml
+                listSets:
+                  summary: ListSets (captured live 2026-08-30)
+                  externalValue: ../examples/erasmus-university-rotterdam-repub-oai-listsets-response.xml
+                badVerb:
+                  summary: badVerb error, returned inside a 200 envelope (captured live 2026-08-30)
+                  externalValue: ../examples/erasmus-university-rotterdam-repub-oai-error-badverb-response.xml
+        '404':
+          description: 'Returned for paths other than /oai on this host. Observed live: GET https://repub.eur.nl/openapi.json returns 404 text/html.'
+          content:
+            text/html:
+              schema:
+                type: string
+      security: []

@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+  <responseDate>2026-08-30T19:26:19Z</responseDate>
+  <request verb="Identify">https://repub.eur.nl/oai</request>
+  <Identify>
+    <repositoryName>Erasmus University OAIPMH Feed</repositoryName>
+    <baseURL>https://repub.eur.nl/oai</baseURL>
+    <protocolVersion>2.0</protocolVersion>
+    <adminEmail>opdecoul@ubib.eur.nl</adminEmail>
+    <adminEmail>vanhuisstede@ubib.eur.nl</adminEmail>
+    <earliestDatestamp>2023-11-24T00:00:00Z</earliestDatestamp>
+    <deletedRecord>transient</deletedRecord>
+    <granularity>YYYY-MM-DDThh:mm:ssZ</granularity>
+  </Identify>
+</OAI-PMH>

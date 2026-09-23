@@ -1,0 +1,199 @@
+generated: '2026-08-30'
+method: probed
+x-operator-note: >-
+  Each entry records the operator of the thing that conforms, not just the fact of
+  conformance. Two of the four hits are EUR's outright; two run on tenanted vendor software
+  under an eur.nl hostname and are marked as such.
+source:
+- https://repub.eur.nl/oai?verb=Identify
+- https://repub.eur.nl/oai?verb=ListMetadataFormats
+- https://repub.eur.nl/oai?verb=ListSets
+- https://repub.eur.nl/oai?verb=ListIdentifiers&metadataPrefix=oai_dc
+- https://pure.eur.nl/ws/oai?verb=Identify
+- https://pure.eur.nl/ws/oai?verb=ListMetadataFormats
+- https://pure.eur.nl/ws/oai?verb=ListSets
+- https://metadata.surfconext.nl/idps-metadata.xml
+- https://api.datacite.org/providers/dhcm
+- https://api.datacite.org/repositories?provider-id=dhcm
+- https://api.datacite.org/dois?provider-id=dhcm
+- https://api.crossref.org/members?query=erasmus+university+rotterdam
+- https://canvas.eur.nl/api/lti/security/jwks
+- https://canvas.eur.nl/.well-known/openid-configuration
+- https://api.ror.org/v2/organizations/057w15z03
+docs: https://www.eur.nl/en/library/research-support
+note: >-
+  Conformance against the Kin Score `education` regulatory regime standards[], probed live on
+  2026-08-30 during the university re-profile of Erasmus University Rotterdam. Every entry is
+  a machine-observable response, not a prose claim on a web page. Absences are recorded as
+  `conforms: false` deliberately — this rubric check is reward-only and an invented
+  conformance is worse than a zero.
+standards:
+- id: oai-pmh
+  name: OAI-PMH 2.0 (Open Archives Initiative Protocol for Metadata Harvesting)
+  conforms: true
+  operator: institution
+  evidence: >-
+    https://repub.eur.nl/oai?verb=Identify returns 200 text/xml with a valid OAI-PMH 2.0
+    envelope: repositoryName "Erasmus University OAIPMH Feed", baseURL https://repub.eur.nl/oai,
+    protocolVersion 2.0, adminEmail opdecoul@ubib.eur.nl and vanhuisstede@ubib.eur.nl,
+    earliestDatestamp 2023-11-24T00:00:00Z, deletedRecord transient, granularity
+    YYYY-MM-DDThh:mm:ssZ. ListMetadataFormats returns three prefixes — oai_dc, mods and
+    nl_didl, the last being the Dutch DIDL profile used by national aggregators. ListSets
+    returns two configured sets, openaire (OpenAIRE) and nwo (NWO Funded Research), which is
+    evidence of a configured repository rather than a default install. ListIdentifiers with
+    metadataPrefix=oai_dc returns live headers of the form oai:repub.eur.nl:<id>, including
+    status="deleted" tombstones, consistent with the declared transient deletion policy. An
+    intentional badVerb request returns <error code="badVerb">Illegal verb: BadVerb</error>
+    inside a 200 envelope, which is correct OAI-PMH error semantics.
+  operator_evidence: >-
+    repub.eur.nl is a CNAME to bib-app01.ubib.eur.nl -> 145.5.2.24. Both the alias and the
+    target are inside eur.nl, on the university library's own subdomain, with no vendor host
+    anywhere in the chain, and both administrative contacts are @ubib.eur.nl addresses. This
+    is EUR's own repository software on EUR's own infrastructure.
+  spec: https://www.openarchives.org/OAI/openarchivesprotocol.html
+- id: oai-pmh
+  name: OAI-PMH 2.0 with the OpenAIRE Guidelines for CRIS Managers (CERIF-XML 1.2)
+  conforms: true
+  operator: tenant
+  evidence: >-
+    https://pure.eur.nl/ws/oai?verb=Identify returns 200 application/xml: repositoryName
+    "EUR Research Repository", baseURL https://pure.eur.nl/ws/oai, protocolVersion 2.0,
+    earliestDatestamp 2021-06-14T10:37:49Z. The Identify description carries an OpenAIRE
+    CERIF profile Service block declaring Compatibility
+    OpenAIRE_Service_Compatibility#1.2, Acronym pure.eur.nl, and an explicit
+    Owner/DisplayName of "Erasmus University Rotterdam" with OrgUnit acronym EUR, plus a
+    rightsManifest asserting "Copyright (c) Erasmus University Rotterdam".
+    ListMetadataFormats returns seven prefixes including oai_cerif_openaire; ListSets
+    returns the CERIF entity sets (openaire_cris_publications, _patents, _persons,
+    _orgunits, _events, _equipments, _products) alongside persons:all, publications:all,
+    publications:withFiles and per-year publication sets.
+  operator_evidence: >-
+    pure.eur.nl is a CNAME to erasmus.elsevierpure.com -> eu.prod.elsevierpure.com ->
+    eu.prod.elsevierpure.com.cdn.cloudflare.net. That is a platform CNAME, not a CDN in
+    front of an EUR origin. The Identify adminEmail is purehosted@elsevier.com. The
+    records, the copyright and the OpenAIRE registration are EUR's; the repository
+    software, the hosting and the OAI-PMH implementation are Elsevier Pure's. The Pure web
+    service itself confirms this: https://pure.eur.nl/ws/api redirects to
+    /ws/api/documentation/index.html whose canonical link is
+    https://api.elsevierpure.com/ws/api/documentation/index.html, and
+    https://pure.eur.nl/ws/api/524/openapi.json answers 401 application/json.
+  caveat: >-
+    Real protocol conformance, real EUR content, vendor implementation. Credited to the
+    tenancy, not to EUR's engineering.
+  spec: https://openaire-guidelines-for-cris-managers.readthedocs.io/
+- id: datacite
+  name: DataCite DOI registration
+  conforms: true
+  operator: institution
+  evidence: >-
+    https://api.datacite.org/providers/dhcm returns 200: symbol DHCM, name and displayName
+    "Erasmus University Library", memberType consortium_organization, website
+    https://www.eur.nl/en/library/, rorId https://ror.org/057w15z03, created
+    2020-09-02T15:47:49Z. One repository client is registered beneath it —
+    https://api.datacite.org/repositories?provider-id=dhcm returns exactly one, id
+    delft.eur, name "Universiteitsbibliotheek EUR". 3,722 DOIs have been minted under the
+    membership (https://api.datacite.org/dois?provider-id=dhcm, meta.total 3722). The
+    membership, the client registration and the minted DOIs all belong to Erasmus
+    University Library and are resolvable through DataCite's own public API without a key.
+  spec: https://support.datacite.org/docs/api
+- id: lti
+  name: LTI 1.3 / IMS Global Learning Tools Interoperability
+  conforms: true
+  operator: tenant
+  evidence: >-
+    https://canvas.eur.nl/api/lti/security/jwks returns 200 application/json with a live
+    RSA JWKS (kty RSA, e AQAB, RS256 signing keys) — the LTI 1.3 platform keyset.
+    https://canvas.eur.nl/.well-known/openid-configuration returns 200 declaring issuer
+    https://canvas.eur.nl, authorization_endpoint /login/oauth2/auth, token_endpoint
+    /login/oauth2/token, jwks_uri /login/oauth2/jwks, RS256 id-token signing and the
+    authorization_code grant — the OIDC third-party-initiated login LTI 1.3 requires.
+    https://canvas.eur.nl/api/v1/courses answers 401 application/json
+    {"status":"unauthenticated","errors":[{"message":"user authorisation required"}]},
+    confirming a live Canvas REST API behind institutional credentials.
+  operator_evidence: >-
+    canvas.eur.nl is a CNAME to EUR-vanity.instructure.com -> 108.139.47.x (CloudFront).
+    Instructure Canvas, EUR tenancy. The courses and enrolments are EUR's; the LTI platform
+    implementation is Instructure's.
+  spec: https://www.imsglobal.org/spec/lti/v1p3/
+- id: saml
+  name: SAML 2.0 Web Browser SSO
+  conforms: true
+  operator: tenant
+  evidence: >-
+    Erasmus University Rotterdam is registered as an identity provider in the SURFconext
+    federation. https://metadata.surfconext.nl/idps-metadata.xml (200, 1,032,474 bytes, 205
+    entities) carries an EntityDescriptor with entityID
+    https://sts.windows.net/715902d6-f63e-4b8d-929b-4bb170bad492/, an IDPSSODescriptor with
+    protocolSupportEnumeration urn:oasis:names:tc:SAML:2.0:protocol, an RSA signing
+    KeyDescriptor, persistent and transient NameIDFormat support, an mdui:UIInfo block with
+    DisplayName "Erasmus University Rotterdam" / "Erasmus Universiteit Rotterdam" and logo
+    https://static.surfconext.nl/logos/idp/eur.png, an md:Organization block with
+    OrganizationURL http://www.eur.nl/, and ten shibmd:Scope declarations covering eur.nl,
+    student.eur.nl, iss.nl, rsm.nl, ese.eur.nl, law.eur.nl, essb.eur.nl, eshpm.eur.nl,
+    esphil.eur.nl and eshcc.eur.nl.
+  operator_evidence: >-
+    Marked tenant, not institution. The registration, the scopes and the organisational
+    identity are EUR's, but the entityID is a Microsoft Entra ID tenant on sts.windows.net,
+    and the single SingleSignOnService Location is
+    https://engine.surfconext.nl/authentication/idp/single-sign-on/... — SURF's hub-and-spoke
+    proxy. EUR runs neither the IdP software nor the SSO endpoint: no idp.eur.nl, sso.eur.nl
+    (which resolves to the generic EUR web front end, not an IdP) or adfs.eur.nl publishes a
+    SAML service. The federation membership is a genuine institutional fact; the engineering
+    beneath it is Microsoft's and SURF's.
+  spec: http://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html
+- id: shibboleth
+  name: Shibboleth / SURFconext + eduGAIN
+  conforms: partial
+  operator: tenant
+  evidence: >-
+    The EUR entity in the SURFconext aggregate carries urn:mace:shibboleth:metadata:1.0
+    shibmd:Scope extensions for all ten EUR domains, which is the Shibboleth metadata
+    profile, and SURFconext is the Dutch eduGAIN participant. Marked partial rather than
+    true because no Shibboleth IdP software is operated by EUR: the entity is a Microsoft
+    Entra ID tenant fronted by SURFconext's engine, and no
+    protocolSupportEnumeration for urn:mace:shibboleth:1.0 is declared on the entity.
+  spec: https://wiki.surfnet.nl/display/surfconext/
+- id: crossref
+  name: Crossref DOI registration
+  conforms: false
+  operator: null
+  evidence: >-
+    https://api.crossref.org/members?query=erasmus+university+rotterdam returns 200 with
+    message.total-results = 0. Erasmus University Rotterdam holds no Crossref membership of
+    its own; its DOI registration runs through DataCite (member DHCM) instead.
+  spec: https://api.crossref.org/
+- id: scim
+  name: SCIM 2.0 (System for Cross-domain Identity Management)
+  conforms: false
+  evidence: >-
+    No SCIM service provider configuration found. api.eur.nl answers 401 at the root and
+    404 "no Route matched with those values" on /v1, /api, /scim and every other probed
+    path, so no SCIM route is exposed to the public internet.
+- id: oneroster
+  name: OneRoster
+  conforms: false
+  evidence: No OneRoster endpoint found on any EUR-operated or EUR-tenanted host.
+- id: ed-fi
+  name: Ed-Fi Data Standard
+  conforms: false
+  evidence: >-
+    Not applicable in the Dutch higher-education context and not found. Ed-Fi is a US K-12
+    and state-agency standard.
+- id: caliper
+  name: IMS Caliper Analytics
+  conforms: false
+  evidence: >-
+    Canvas supports Caliper as a platform feature, but no Caliper event store or endpoint is
+    exposed on canvas.eur.nl to an unauthenticated caller, so no conformance is claimed.
+- id: qti
+  name: QTI (Question and Test Interoperability)
+  conforms: false
+  evidence: No QTI surface found on any EUR-operated or EUR-tenanted host.
+- id: orcid
+  name: ORCID
+  conforms: false
+  evidence: >-
+    Elsevier Pure ships an ORCID integration and EUR runs Pure, but no ORCID member API
+    registration, public ORCID service endpoint or machine-readable ORCID assertion could be
+    observed for EUR from outside. Recorded false rather than assumed true — this check is
+    reward-only.

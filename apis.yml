@@ -77,6 +77,20 @@ tags:
 - OAI-PMH
 - Identity Federation
 - Course Catalog
+- LMS
+tags_raw:
+- University
+- Higher Education
+- Education
+- Netherlands
+- Rotterdam
+- Research
+- Research Data
+- Open Access
+- Repository
+- OAI-PMH
+- Identity Federation
+- Course Catalog
 - Learning Management
 created: '2026-06-03'
 modified: '2026-08-30'
@@ -353,7 +367,7 @@ apis:
   humanURL: https://canvas.eur.nl/
   baseURL: https://canvas.eur.nl/api/v1
   tags:
-  - Learning Management
+  - LMS
   - LTI
   - Canvas
   - Tenants
